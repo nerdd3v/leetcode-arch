@@ -1,5 +1,5 @@
 import express from "express";
-import client from "./middleware/redis.js";
+import client from "@repo/redis";
 import { handleSubmission } from "./middleware/handleSubmission.js";
 import pClient from "@repo/db"
 
@@ -24,8 +24,6 @@ app.post("/signup", async(req, res)=>{
             return res.status(402).json({
                 message: "username already exists (redis cache)"
             })
-        }else{
-            
         }
 
         const checkUsername = await pClient.user.findFirst({
@@ -115,7 +113,7 @@ app.get("/mySubmissions", (req, res)=>{
 
 async function startServer(){
     try {
-        await client.connect();
+        await client.connect()
         app.listen(3000, ()=>{
             console.log("app listening")
         })

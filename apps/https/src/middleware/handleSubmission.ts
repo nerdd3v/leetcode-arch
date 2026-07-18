@@ -1,5 +1,5 @@
-import client from "./redis.js";
+import client from "@repo/redis"
 
 export const handleSubmission = async(object: any)=>{
-    await client.lPush("submission", object)
+    await client.lPush("submission",object)
 }
