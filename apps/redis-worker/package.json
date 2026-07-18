@@ -12,5 +12,8 @@
   "type": "module",
   "devDependencies": {
     "@repo/redis": "workspace:*"
+  },
+  "dependencies": {
+    "redis": "^6.1.0"
   }
 }

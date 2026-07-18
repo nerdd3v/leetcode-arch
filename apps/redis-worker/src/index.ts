@@ -1,14 +1,17 @@
-import client from "@repo/redis"
+import { createClient } from "redis";
+
+const client = createClient({
+    url: "redis://localhost:6379"
+})
 
 const runWorker = async()=>{
     await client.connect();
     while(true){
-        let c = await client.brPop("submission", 10000);
+        let c = await client.brPop("submission", 0);
         console.log(`processing ${c?.element}`)
 
         
         if(c){
-
             let num = Math.floor(Math.random()*100);
             let status;
             const {id, uid, code} = JSON.parse(c.element);
@@ -20,9 +23,12 @@ const runWorker = async()=>{
                 status = "fail"
                 console.log(`processes and the output is ::::  ${status}`)
             }
-            await client.publish(`response:user:${uid}`, JSON.stringify({
-                status
+
+            await client.publish(`channel:${uid}`, JSON.stringify({
+                status,
+                uid
             }))
+            console.log("published")
         }
     }
 }
