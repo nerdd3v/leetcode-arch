@@ -37,8 +37,23 @@ app.post("/signup", async(req, res)=>{
                 message: "username already exists (primary db)"
             })
         }
+
+        await client.sAdd("username:set", username);
+
+        const user = await pClient.user.create({
+            data:{
+                username
+            }
+        })
+
+        return res.status(200).json({
+            message: "user added",
+            id: user.id
+        })
     } catch (error) {
-        
+        return res.status(500).json({
+            message: "internal server error"
+        })
     }
 })
 
