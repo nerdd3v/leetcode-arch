@@ -1,5 +1,5 @@
 import express from "express";
-import client from "@repo/redis";
+import {client} from "./middleware/handleSubmission.js"
 import { handleSubmission } from "./middleware/handleSubmission.js";
 import pClient from "@repo/db"
 
