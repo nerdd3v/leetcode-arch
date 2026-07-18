@@ -1,9 +1,46 @@
 import express from "express";
 import client from "./middleware/redis.js";
 import { handleSubmission } from "./middleware/handleSubmission.js";
+import pClient from "@db"
 
 const app = express();
 app.use(express.json())
+
+
+app.post("/signup", async(req, res)=>{
+    const {username} = req.body;
+
+    if(!username){
+        return res.status(402).json({
+            message: "no user for signup"
+        })
+    }
+
+    try {
+
+        const checkRedisForUsername = await client.sIsMember("username:set", username)
+
+        if(checkRedisForUsername){
+            return res.status(402).json({
+                message: "username already exists (redis cache)"
+            })
+        }
+
+        const checkUsername = await pClient.user.findFirst({
+            where:{
+                username
+            }
+        })
+
+        if(checkUsername?.username == username){
+            return res.status(402).json({
+                message: "username already exists (primary db)"
+            })
+        }
+    } catch (error) {
+        
+    }
+})
 
 app.post("/submission", async(req, res)=>{
     const {code, id, uid} = req.body;

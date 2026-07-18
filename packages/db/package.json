@@ -1,0 +1,21 @@
+{
+  "name": "@db",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "tsc && node ./dist/index.js",
+    "build": "tsc"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@prisma/client": "^6.0.0",
+    "prisma": "^6.0.0"
+  },
+  "type": "module",
+  "exports":{
+    ".": "./src/index.ts"
+  }
+}
