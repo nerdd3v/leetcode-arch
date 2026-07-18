@@ -1,7 +1,7 @@
 import express from "express";
 import client from "./middleware/redis.js";
 import { handleSubmission } from "./middleware/handleSubmission.js";
-import pClient from "@db"
+import pClient from "@repo/db"
 
 const app = express();
 app.use(express.json())
@@ -24,6 +24,8 @@ app.post("/signup", async(req, res)=>{
             return res.status(402).json({
                 message: "username already exists (redis cache)"
             })
+        }else{
+            
         }
 
         const checkUsername = await pClient.user.findFirst({
