@@ -13,5 +13,8 @@
     "@types/ws": "^8.18.1",
     "ws": "^8.21.1"
   },
-  "type": "module"
+  "type": "module",
+  "devDependencies": {
+    "@repo/redis": "workspace:*"
+  }
 }
